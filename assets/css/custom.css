@@ -1,0 +1,30 @@
+.alpha-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.alpha-file-input {
+    cursor: pointer;
+    border: 2px dashed #aaa;
+    padding: 12px;
+    background-color: #f9f9f9;
+    width: 100%;
+    border-radius: 4px;
+}
+
+#image-preview {
+    border: 2px solid #ddd;
+    padding: 5px;
+    max-width: 200px; /* Set a max width */
+    height: 200px;
+    display: none; /* Hide by default */
+}
+
+.profile-img {
+    border-radius: 50%;
+}
+
+/* Write your custom CSS here */
