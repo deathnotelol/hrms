@@ -64,7 +64,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 
         // Execute query and redirect or display message
         if ($query->execute()) {
-            echo "Employee record updated successfully!";
+            $msg = "Employee record updated successfully!";
             echo "<script>
                     setTimeout(function(){
                         window.location.href = 'manageemployee.php';
@@ -77,46 +77,6 @@ if (strlen($_SESSION['alogin']) == 0) {
 
 ?>
 
-    <!DOCTYPE html>
-    <html lang="en">
-
-    <head>
-        <title>Admin | Update Employee</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <meta charset="UTF-8">
-        <meta name="description" content="Responsive Admin Dashboard Template" />
-        <meta name="keywords" content="admin,dashboard" />
-        <meta name="author" content="Steelcoders" />
-
-        <!-- Styles -->
-        <link type="text/css" rel="stylesheet" href="../assets/plugins/materialize/css/materialize.min.css" />
-        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link href="../assets/plugins/material-preloader/css/materialPreloader.min.css" rel="stylesheet">
-        <link href="../assets/css/alpha.min.css" rel="stylesheet" type="text/css" />
-        <link href="../assets/css/custom.css" rel="stylesheet" type="text/css" />
-        <style>
-            .errorWrap {
-                padding: 10px;
-                margin: 0 0 20px 0;
-                background: #fff;
-                border-left: 4px solid #dd3d36;
-                box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
-            }
-
-            .succWrap {
-                padding: 10px;
-                margin: 0 0 20px 0;
-                background: #fff;
-                border-left: 4px solid #5cb85c;
-                box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
-            }
-
-            #profile_image_preview {
-                width: 150px;
-                height: 150px;
-            }
-        </style>
-    </head>
 
     <body>
         <?php include('includes/header.php'); ?>
@@ -278,31 +238,9 @@ if (strlen($_SESSION['alogin']) == 0) {
 
         <div class="left-sidebar-hover"></div>
 
-        <!-- Javascripts -->
-        <script src="../assets/plugins/jquery/jquery-2.2.0.min.js"></script>
-        <script src="../assets/plugins/materialize/js/materialize.min.js"></script>
-        <script src="../assets/plugins/material-preloader/js/materialPreloader.min.js"></script>
-        <script src="../assets/js/alpha.min.js"></script>
+        <?php include('includes/footer.php'); ?>
 
         <!-- Salary Update Script -->
-        <script>
-            function updateSalary() {
-                var positionSelect = document.getElementById("position");
-                var selectedOption = positionSelect.options[positionSelect.selectedIndex];
-                var salary = selectedOption.getAttribute("data-salary");
-                document.getElementById("salary").value = salary;
-            }
-            //Rander for Profile images
-
-            function previewImage(event) {
-                var reader = new FileReader();
-                reader.onload = function() {
-                    var output = document.getElementById('profile_image_preview');
-                    output.src = reader.result;
-                }
-                reader.readAsDataURL(event.target.files[0]);
-            }
-        </script>
     </body>
 
     </html>

@@ -38,37 +38,6 @@ if (strlen($_SESSION['alogin']) == 0) {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <title>Admin | Update Position</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Styles -->
-    <link type="text/css" rel="stylesheet" href="../assets/plugins/materialize/css/materialize.min.css" />
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="../assets/css/alpha.min.css" rel="stylesheet" type="text/css" />
-    <link href="../assets/css/custom.css" rel="stylesheet" type="text/css" />
-    <style>
-        .errorWrap {
-            padding: 10px;
-            margin: 0 0 20px 0;
-            background: #fff;
-            border-left: 4px solid #dd3d36;
-            box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
-        }
-
-        .succWrap {
-            padding: 10px;
-            margin: 0 0 20px 0;
-            background: #fff;
-            border-left: 4px solid #5cb85c;
-            box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
-        }
-    </style>
-</head>
-
 <body>
     <?php include('includes/header.php'); ?>
     <?php include('includes/sidebar.php'); ?> 
@@ -127,15 +96,7 @@ if (strlen($_SESSION['alogin']) == 0) {
             </div>
         </div>
     </main>
-
-    <!-- Javascripts -->
-    <script src="../assets/plugins/jquery/jquery-2.2.0.min.js"></script>
-    <script src="../assets/plugins/materialize/js/materialize.min.js"></script>
-    <script src="../assets/plugins/material-preloader/js/materialPreloader.min.js"></script>
-    <script src="../assets/plugins/jquery-blockui/jquery.blockui.js"></script>
-    <script src="../assets/plugins/datatables/js/jquery.dataTables.min.js"></script>
-    <script src="../assets/js/alpha.min.js"></script>
-    <script src="../assets/js/pages/table-data.js"></script>
+    <?php include('includes/footer.php'); ?>
 </body>
 
 </html>
