@@ -34,6 +34,18 @@
                          </ul>
                      </div>
                  </li>
+
+                 <li class="no-padding">
+                     <a class="collapsible-header waves-effect waves-grey"><i class="material-icons">account_box</i>Employees<i class="nav-drop-icon material-icons">keyboard_arrow_right</i></a>
+                     <div class="collapsible-body">
+                         <ul>
+                             <li><a href="addemployee.php">Add Employee</a></li>
+                             <li><a href="manageemployee.php">Manage Employee</a></li>
+
+                         </ul>
+                     </div>
+                 </li>
+
                  <li class="no-padding"><a class="waves-effect waves-grey" href="attendanceview.php"><i class="material-icons">view_compact_alt</i>Attendance View</a></li>
 
 
@@ -44,16 +56,6 @@
                          <ul>
                              <li><a href="addleavetype.php">Add Leave Type</a></li>
                              <li><a href="manageleavetype.php">Manage Leave Type</a></li>
-                         </ul>
-                     </div>
-                 </li>
-                 <li class="no-padding">
-                     <a class="collapsible-header waves-effect waves-grey"><i class="material-icons">account_box</i>Employees<i class="nav-drop-icon material-icons">keyboard_arrow_right</i></a>
-                     <div class="collapsible-body">
-                         <ul>
-                             <li><a href="addemployee.php">Add Employee</a></li>
-                             <li><a href="manageemployee.php">Manage Employee</a></li>
-
                          </ul>
                      </div>
                  </li>
@@ -79,7 +81,6 @@
                          <ul>
                              <li><a href="paySalary.php">Pay Salary</a></li>
                              <li><a href="salaryHistory.php">Salary History</a></li>
-                             <li><a href="salarySlip.php">Slip</a></li>
                          </ul>
                      </div>
                  </li>
@@ -96,7 +97,7 @@
 
              </ul>
              <div class="footer">
-                 <p class="copyright">ELMS ©</p>
+                 <p class="copyright">HRMS © Design by GROUP-3</p>
 
              </div>
          </div>

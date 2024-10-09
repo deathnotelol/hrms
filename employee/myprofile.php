@@ -67,7 +67,7 @@ if (strlen($_SESSION['emplogin']) == 0) {
             echo "Employee record updated successfully!";
             echo "<script>
                     setTimeout(function(){
-                        window.location.href = 'manageemployee.php';
+                        window.location.href = 'dashboard.php';
                     }, 3000);
                   </script>";
         } else {

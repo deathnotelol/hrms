@@ -27,12 +27,12 @@ if (strlen($_SESSION['alogin']) == 0) {
                     MAX(CASE WHEN employee_attendance.shift = 'evening' THEN employee_attendance.createddate END) AS evening_createddate
                 FROM employee_attendance
                 WHERE employee_attendance.eid = :eid";
-        
+
         $stmt = $dbh->prepare($sql);
         $stmt->bindParam(':eid', $employeeId);
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
-        
+
         // Initialize variables for created dates
         $morning_created = $result['morning_createddate'] ?? null;
         $evening_created = $result['evening_createddate'] ?? null;
@@ -59,7 +59,7 @@ if (strlen($_SESSION['alogin']) == 0) {
 
     // Fetch employees for display
     $employees = getEmployeesWithDetails($dbh);
-    
+
     // Define overtime rate
     $overtime_rate = 50; // Rate per hour
 }
@@ -115,73 +115,73 @@ if (strlen($_SESSION['alogin']) == 0) {
                                     <th>Allowance</th>
                                     <th>Deduction</th>
                                     <th>Net Salary</th>
-                                    <th>Pay Salary</th>
                                     <th>Overtime</th>
+                                    <th>Pay Salary</th>
                                 </tr>
                             </thead>
                             <tbody>
-    <?php foreach ($employees as $employee) { 
-        $empid = $employee['id']; // Assign empid here for use in calculations
-        $overtime_hours = calculateOvertime($dbh, $empid); 
-        $overtime = $overtime_rate * $overtime_hours; 
-        $deduction = 0;
-        $allowance = 0; // Make sure to define allowance before using it
-    ?>
-        <tr>
-            <td><?php echo htmlspecialchars($employee['EmpId']); ?></td>
-            <td><?php echo htmlspecialchars($employee['FirstName'] . " " . $employee['LastName']); ?></td>
-            <td><?php echo htmlspecialchars($employee['position_name']); ?></td>
-            <td><?php echo htmlspecialchars($employee['salary']); ?></td>
+                                <?php foreach ($employees as $employee) {
+                                    $empid = $employee['id']; // Assign empid here for use in calculations
+                                    $overtime_hours = calculateOvertime($dbh, $empid);
+                                    $overtime = $overtime_rate * $overtime_hours;
+                                    $deduction = 0;
+                                    $allowance = 0; // Make sure to define allowance before using it
+                                ?>
+                                    <tr>
+                                        <td><?php echo htmlspecialchars($employee['EmpId']); ?></td>
+                                        <td><?php echo htmlspecialchars($employee['FirstName'] . " " . $employee['LastName']); ?></td>
+                                        <td><?php echo htmlspecialchars($employee['position_name']); ?></td>
+                                        <td><?php echo htmlspecialchars($employee['salary']); ?></td>
 
-            <td><?php echo $overtime; ?></td> <!-- Use calculated overtime here -->
+                                        <td><?php echo $overtime; ?></td> <!-- Use calculated overtime here -->
 
-            <?php
-            $st = 1;
-            $month = date('m'); // Current month
-            $year = date('Y'); // Current year
+                                        <?php
+                                        $st = 1;
+                                        $month = date('m'); // Current month
+                                        $year = date('Y'); // Current year
 
-            // SQL query to filter by AdminRemarkDate month and year
-            $sql = "SELECT * FROM tblleaves 
+                                        // SQL query to filter by AdminRemarkDate month and year
+                                        $sql = "SELECT * FROM tblleaves 
                     WHERE tblleaves.Status = $st 
                     AND tblleaves.empid = $empid 
                     AND MONTH(tblleaves.AdminRemarkDate) = $month 
                     AND YEAR(tblleaves.AdminRemarkDate) = $year";
 
-            $query = $dbh->prepare($sql);
-            $query->execute();
-            $results = $query->fetchAll(PDO::FETCH_OBJ);
+                                        $query = $dbh->prepare($sql);
+                                        $query->execute();
+                                        $results = $query->fetchAll(PDO::FETCH_OBJ);
 
-            if (count($results) > 0) { 
-                foreach ($results as $result) { 
-                    $deduction += $result->Deduction;    
-                }
-            }
-            ?> 
+                                        if (count($results) > 0) {
+                                            foreach ($results as $result) {
+                                                $deduction += $result->Deduction;
+                                            }
+                                        }
+                                        ?>
 
-            <td><?php echo "$deduction"; ?></td>
-      
-            <td>
-                <?php
-                $netsalary =  $employee['salary'] +  $overtime - $deduction;  
-                echo "$netsalary"; 
-                ?>
-            </td>
-            <td>
-                <form method="POST" action="confirmPayment.php">
-                    <input type="hidden" name="empId" value="<?php echo htmlspecialchars($employee['EmpId']); ?>">
-                    <input type="hidden" name="position" value="<?php echo htmlspecialchars($employee['position_name']); ?>">
-                    
-                    <input type="hidden" name="salary" value="<?php echo htmlspecialchars($employee['salary']); ?>">
-                    <input type="hidden" name="netsalary" value="<?php echo $netsalary; ?>">
-                    <input type="hidden" name="overtime" value="<?php echo  $overtime; ?>">
-                    <input type="hidden" name="deduction" value="<?php echo $deduction; ?>">
-                    <button type="submit" name="pay" class="btn">Pay Salary</button>
-                </form>
-            </td>
-            <td><?php echo $overtime_hours; ?>&nbsp;Hr</td> <!-- Show calculated overtime hours -->
-        </tr>
-    <?php } ?>
-</tbody>
+                                        <td><?php echo "$deduction"; ?></td>
+
+                                        <td>
+                                            <?php
+                                            $netsalary =  $employee['salary'] +  $overtime - $deduction;
+                                            echo "$netsalary";
+                                            ?>
+                                        </td>
+                                        <td><?php echo $overtime_hours; ?>&nbsp;Hr</td> <!-- Show calculated overtime hours -->
+                                        <td>
+                                            <form method="POST" action="confirmPayment.php">
+                                                <input type="hidden" name="empId" value="<?php echo htmlspecialchars($employee['EmpId']); ?>">
+                                                <input type="hidden" name="position" value="<?php echo htmlspecialchars($employee['position_name']); ?>">
+
+                                                <input type="hidden" name="salary" value="<?php echo htmlspecialchars($employee['salary']); ?>">
+                                                <input type="hidden" name="netsalary" value="<?php echo $netsalary; ?>">
+                                                <input type="hidden" name="overtime" value="<?php echo  $overtime; ?>">
+                                                <input type="hidden" name="deduction" value="<?php echo $deduction; ?>">
+                                                <button type="submit" name="pay" class="btn">Pay Salary</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
 
                         </table>
                     </div>

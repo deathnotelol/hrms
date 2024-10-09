@@ -1,4 +1,60 @@
-<?php include('controller/dashboardController.php'); ?>
+<?php
+
+
+session_start();
+error_reporting(0);
+include('includes/config.php');
+
+// Redirect if not logged in
+if (strlen($_SESSION['alogin']) == 0) {
+    header('location:index.php');
+    exit;
+}
+
+// Fetch counts based on table and optional conditions
+function fetchCount($dbh, $table, $condition = null)
+{
+    $sql = "SELECT COUNT(id) AS count FROM $table";
+    if ($condition) {
+        $sql .= " WHERE $condition";
+    }
+    $query = $dbh->prepare($sql);
+    $query->execute();
+    return $query->fetchColumn();
+}
+
+// Fetch latest leave applications
+function fetchLatestLeaveApplications($dbh, $limit = 6)
+{
+    $sql = "SELECT tblleaves.id AS lid, tblemployees.FirstName, tblemployees.LastName, 
+                   tblemployees.EmpId, tblemployees.id AS empid, tblleaves.LeaveType, tblleaves.PostingDate, tblleaves.Status 
+            FROM tblleaves 
+            JOIN tblemployees ON tblleaves.empid = tblemployees.id 
+            ORDER BY tblleaves.id DESC LIMIT :limit";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':limit', $limit, PDO::PARAM_INT);
+    $query->execute();
+    return $query->fetchAll(PDO::FETCH_OBJ);
+}
+
+// Constants for leave statuses
+define('STATUS_APPROVED', 1);
+define('STATUS_PENDING', 0);
+
+// Fetch various counts
+$empcount = fetchCount($dbh, 'tblemployees');
+$dptcount = fetchCount($dbh, 'tbldepartments');
+$leavtypcount = fetchCount($dbh, 'tblleavetype');
+$totalleaves = fetchCount($dbh, 'tblleaves');
+$approvedleaves = fetchCount($dbh, 'tblleaves', 'Status = ' . STATUS_APPROVED);
+$newleaveapplications = fetchCount($dbh, 'tblleaves', 'Status = ' . STATUS_PENDING);
+
+// Fetch latest leave applications
+$latestLeaveApplications = fetchLatestLeaveApplications($dbh);
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
