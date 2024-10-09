@@ -2,8 +2,7 @@
 require_once("includes/config.php");
 // code for empid availablity
 if(!empty($_POST["empcode"])) {
-	$empid=$_POST["empcode"];
-	
+	$empid=$_POST["empcode"];	
 $sql ="SELECT EmpId FROM tblemployees WHERE EmpId=:empid";
 $query= $dbh->prepare($sql);
 $query-> bindParam(':empid',$empid, PDO::PARAM_STR);
@@ -41,5 +40,3 @@ echo "<script>$('#add').prop('disabled',false);</script>";
 
 
 
-
-?>

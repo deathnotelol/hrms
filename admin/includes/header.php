@@ -20,6 +20,11 @@
     <link href="../assets/plugins/material-preloader/css/materialPreloader.min.css" rel="stylesheet">
     <link href="../assets/plugins/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link href="../assets/plugins/google-code-prettify/prettify.css" rel="stylesheet" type="text/css" />
+
+
+
+ 
 
 
 

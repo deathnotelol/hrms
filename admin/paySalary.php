@@ -65,31 +65,6 @@ if (strlen($_SESSION['alogin']) == 0) {
 }
 ?>
 
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <!-- Title -->
-    <title>Admin | Manage Salary</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta charset="UTF-8">
-    <meta name="description" content="Responsive Admin Dashboard Template" />
-    <meta name="keywords" content="admin,dashboard" />
-    <meta name="author" content="Steelcoders" />
-
-    <!-- Styles -->
-    <link type="text/css" rel="stylesheet" href="../assets/plugins/materialize/css/materialize.min.css" />
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link href="../assets/plugins/material-preloader/css/materialPreloader.min.css" rel="stylesheet">
-    <link href="../assets/plugins/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
-
-    <!-- Theme Styles -->
-    <link href="../assets/css/alpha.min.css" rel="stylesheet" type="text/css" />
-    <link href="../assets/css/custom.css" rel="stylesheet" type="text/css" />
-</head>
-
 <body>
     <?php include('includes/header.php'); ?>
     <?php include('includes/sidebar.php'); ?>
@@ -142,10 +117,10 @@ if (strlen($_SESSION['alogin']) == 0) {
 
                                         // SQL query to filter by AdminRemarkDate month and year
                                         $sql = "SELECT * FROM tblleaves 
-                    WHERE tblleaves.Status = $st 
-                    AND tblleaves.empid = $empid 
-                    AND MONTH(tblleaves.AdminRemarkDate) = $month 
-                    AND YEAR(tblleaves.AdminRemarkDate) = $year";
+                                        WHERE tblleaves.Status = $st 
+                                        AND tblleaves.empid = $empid 
+                                        AND MONTH(tblleaves.AdminRemarkDate) = $month 
+                                        AND YEAR(tblleaves.AdminRemarkDate) = $year";
 
                                         $query = $dbh->prepare($sql);
                                         $query->execute();
@@ -189,15 +164,8 @@ if (strlen($_SESSION['alogin']) == 0) {
             </div>
         </div>
     </main>
+    <?php include('includes/footer.php'); ?>
 
-    <!-- Javascripts -->
-    <script src="../assets/plugins/jquery/jquery-2.2.0.min.js"></script>
-    <script src="../assets/plugins/materialize/js/materialize.min.js"></script>
-    <script src="../assets/plugins/material-preloader/js/materialPreloader.min.js"></script>
-    <script src="../assets/plugins/jquery-blockui/jquery.blockui.js"></script>
-    <script src="../assets/plugins/datatables/js/jquery.dataTables.min.js"></script>
-    <script src="../assets/js/alpha.min.js"></script>
-    <script src="../assets/js/pages/table-data.js"></script>
 </body>
 
 </html>

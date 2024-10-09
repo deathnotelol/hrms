@@ -32,7 +32,6 @@ if (isset($_POST['add'])) {
 ?>
 
 
-
 <body>
     <?php include('includes/header.php'); ?>
 
