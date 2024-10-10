@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 06, 2024 at 01:35 PM
+-- Generation Time: Oct 10, 2024 at 11:43 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -106,7 +106,8 @@ INSERT INTO `positions` (`id`, `position_name`, `salary`, `CreateDate`) VALUES
 (1, 'Software Engineer', 5000.00, '2024-10-02 15:14:46'),
 (2, 'Project Manager', 7000.00, '2024-10-02 15:14:46'),
 (3, 'System Analyst', 5500.00, '2024-10-02 15:14:46'),
-(4, 'Developer', 4500.00, '2024-10-02 15:14:46');
+(4, 'Developer', 4500.00, '2024-10-02 15:14:46'),
+(6, 'dfjefef', 555555.00, '2024-10-10 04:19:45');
 
 -- --------------------------------------------------------
 
@@ -164,13 +165,12 @@ CREATE TABLE `tblemployees` (
 --
 
 INSERT INTO `tblemployees` (`id`, `EmpId`, `FirstName`, `LastName`, `EmailId`, `Password`, `Gender`, `Dob`, `Department`, `Address`, `City`, `Country`, `PositionID`, `Phonenumber`, `Status`, `RegDate`, `ProfileImage`) VALUES
-(19, '10001', 'Aye', 'Aye', 'ayeaye@gmail.com', '6ad14ba9986e3615423dfca256d04e3f', NULL, '13 September, 1995', 'Accounts', 'localhost', 'Yangon', 'Myanmar', 4, '09789456123', 1, '2024-09-29 13:18:42', '../assets/images/upload/images (4).jpg'),
+(19, '10001', 'Aye', 'Aye', 'ayeaye@gmail.com', '6ad14ba9986e3615423dfca256d04e3f', 'Female', '13 September, 1995', 'Accounts', 'localhost', 'Yangon', 'Myanmar', 4, '09789456123', 1, '2024-09-29 13:18:42', '../assets/images/upload/images (4).jpg'),
 (20, '10002', 'Mya', 'Mya', 'myamya@gmail.com', '6ad14ba9986e3615423dfca256d04e3f', 'Female', '11 September, 1990', 'Human Resource', 'BLDG-2, RM-5, EAST YANKIN', 'Mandalay', 'Myanmar', 2, '09456123789', 1, '2024-09-29 13:20:13', '../assets/images/upload/007.jpg'),
 (21, '10003', 'War', 'War', 'warwar@gmail.com', '6ad14ba9986e3615423dfca256d04e3f', 'Female', '11 September, 1996', 'Human Resource', 'BLDG-2, RM-5, EAST YANKIN', 'Yangon', 'Myanmar', 3, '09123456789', 1, '2024-09-29 13:21:38', '../assets/images/upload/images (3).jpg'),
-(22, '10004', 'Mar', 'Mar', 'marmar@gmail.com', '6ad14ba9986e3615423dfca256d04e3f', 'Female', '9 September, 1999', 'Human Resource', 'BLDG-2, RM-5, EAST YANKIN', 'Mandalay', 'Myanmar', 2, '09456878954', 1, '2024-09-29 13:24:11', '../assets/images/upload/download (1).jpg'),
-(23, '10005', 'Hla', 'Hla', 'hlahal@gmail.com', '6ad14ba9986e3615423dfca256d04e3f', 'Female', '20 September, 2000', '', 'No1, Building 52', 'Mandalay', 'Myanmar', 3, '09874512354', 1, '2024-09-29 13:26:22', '../assets/images/upload/images (1).jpg'),
-(24, '10006', 'May', 'Thu', 'maythu@gmail.com', '6ad14ba9986e3615423dfca256d04e3f', 'Female', '14 October, 1998', 'Cyber Security Department', 'BLDG-2, RM-5, EAST YANKIN', 'Mandalay', 'Myanmar', 1, '09556688997', 1, '2024-10-02 13:05:12', '../assets/images/upload/images.jpg'),
-(25, '10007', 'Maw ', 'Maw', 'mawmaw@gmail.com', '6ad14ba9986e3615423dfca256d04e3f', 'Female', '2 October, 2000', 'ADMIN', 'BLDG-2, RM-5, EAST YANKIN', 'Taungyi', 'Myanmar', 4, '09454578788', 1, '2024-10-02 13:12:46', '../assets/images/upload/download.jpg');
+(26, '10009', 'Hla', 'Hla', 'hlahla@gmail.com', '6ad14ba9986e3615423dfca256d04e3f', 'Female', '18 October, 2005', 'Human Resource', 'BLDG-2, RM-5, EAST YANKIN', 'Yangon', 'Myanmar', 1, '09454545454', 1, '2024-10-10 08:47:25', '../assets/images/upload/download.jpg'),
+(27, '10010', 'Mar', 'Mar', 'marmar@gmail.com', '6ad14ba9986e3615423dfca256d04e3f', 'Female', '12 October, 2005', 'Information Technology', 'BLDG-2, RM-5, EAST YANKIN', 'Yangon', 'Myanmar', 3, '09444545454', 1, '2024-10-10 08:50:59', '../assets/images/upload/007.jpg'),
+(28, '10011', 'Nyo', 'Nyo', 'nyonyo@gmail.com', '6ad14ba9986e3615423dfca256d04e3f', 'Female', '17 November, 2004', 'Human Resource', 'BLDG-2, RM-5, EAST YANKIN', 'Yangon', 'Singapore', 4, '09454545545', 1, '2024-10-10 09:01:14', '../assets/images/upload/images (1).jpg');
 
 -- --------------------------------------------------------
 
@@ -181,10 +181,11 @@ INSERT INTO `tblemployees` (`id`, `EmpId`, `FirstName`, `LastName`, `EmailId`, `
 CREATE TABLE `tblleaves` (
   `id` int(11) NOT NULL,
   `LeaveType` varchar(110) DEFAULT NULL,
-  `ToDate` date DEFAULT current_timestamp(),
-  `FromDate` date DEFAULT current_timestamp(),
+  `FromDate` date DEFAULT NULL,
+  `ToDate` date DEFAULT NULL,
+  `duration` int(11) NOT NULL,
   `Description` mediumtext DEFAULT NULL,
-  `PostingDate` timestamp NULL DEFAULT current_timestamp(),
+  `PostingDate` date DEFAULT NULL,
   `AdminRemark` longtext DEFAULT NULL,
   `AdminRemarkDate` varchar(120) DEFAULT NULL,
   `Status` int(1) DEFAULT NULL,
@@ -197,10 +198,18 @@ CREATE TABLE `tblleaves` (
 -- Dumping data for table `tblleaves`
 --
 
-INSERT INTO `tblleaves` (`id`, `LeaveType`, `ToDate`, `FromDate`, `Description`, `PostingDate`, `AdminRemark`, `AdminRemarkDate`, `Status`, `IsRead`, `empid`, `Deduction`) VALUES
-(1, 'Earned Leaves', '2024-10-09', '2024-10-07', 'aassasa', '2024-10-06 03:38:31', 'adadadad', '2024-10-06 10:08:59 ', 1, 1, 19, 270.00),
-(2, 'Sick Leaves', '2024-10-09', '2024-10-07', 'weweweewe', '2024-10-06 03:40:10', 'dadaaddada', '2024-10-06 10:10:28 ', 1, 1, 20, 630.00),
-(3, 'RH (Restricted Leaves)', '2024-10-09', '2024-10-07', 'ssddd', '2024-10-06 03:41:06', 'adad', '2024-10-06 10:11:30 ', 1, 1, 20, 840.00);
+INSERT INTO `tblleaves` (`id`, `LeaveType`, `FromDate`, `ToDate`, `duration`, `Description`, `PostingDate`, `AdminRemark`, `AdminRemarkDate`, `Status`, `IsRead`, `empid`, `Deduction`) VALUES
+(1, 'Casual Leaves', '2024-10-11', '2024-10-12', 2, 'Hello', '2024-10-10', 'Done', '2024-10-10 14:36:38 ', 1, 1, 19, 0.00),
+(2, 'Earned Leaves', '2024-10-11', '2024-10-15', 5, 'Hello', '2024-10-10', 'Hello', '2024-10-10 14:36:21 ', 1, 1, 19, 450.00),
+(3, 'Sick Leaves', '2024-10-11', '2024-10-16', 6, 'Hello', '2024-10-10', 'Hello Done', '2024-10-10 14:35:53 ', 1, 1, 19, 810.00),
+(4, 'RH (Restricted Leaves)', '2024-10-11', '2024-10-20', 10, 'Hi', '2024-10-10', 'Hi', '2024-10-10 14:35:11 ', 1, 1, 19, 1800.00),
+(5, 'Casual Leaves', '2024-10-11', '2024-10-13', 3, 'Hello', '2024-10-10', 'Hi ', '2024-10-10 14:40:41 ', 1, 1, 20, 0.00),
+(6, 'Earned Leaves', '2024-10-11', '2024-10-15', 5, 'Hello', '2024-10-10', 'Hello', '2024-10-10 14:40:52 ', 1, 1, 20, 700.00),
+(7, 'Sick Leaves', '2024-10-12', '2024-10-17', 6, 'Hi', '2024-10-10', 'Done', '2024-10-10 14:41:02 ', 1, 1, 20, 1260.00),
+(8, 'RH (Restricted Leaves)', '2024-10-11', '2024-10-20', 10, 'Hello ', '2024-10-10', 'Hi', '2024-10-10 14:41:12 ', 1, 1, 20, 2800.00),
+(9, 'Casual Leaves', '2024-10-11', '2024-10-13', 3, 'dffef', '2024-10-10', 'dfefefefe', '2024-10-10 14:47:00 ', 1, 1, 20, 0.00),
+(10, 'Earned Leaves', '2024-10-11', '2024-10-15', 5, 'effefefef', '2024-10-10', 'dfeef', '2024-10-10 14:49:37 ', 1, 1, 20, 700.00),
+(11, 'Earned Leaves', '2024-10-17', '2024-10-21', 5, 'Hello', '2024-10-10', 'Done', '2024-10-10 15:37:24 ', 1, 1, 20, 700.00);
 
 -- --------------------------------------------------------
 
@@ -250,7 +259,12 @@ CREATE TABLE `tblsalaries` (
 INSERT INTO `tblsalaries` (`id`, `EmpId`, `PaymentMonth`, `PaymentDate`, `PaymentMethod`, `Salary`, `Allowance`, `Deduction`, `NetSalary`) VALUES
 (1, 10001, 'September', '2024-10-06 09:12:37', 'Bank Transfer', 4500.00, 200.00, 270.00, 4430.00),
 (2, 10002, 'September', '2024-10-06 09:30:33', 'Bank Transfer', 7000.00, 0.00, 1470.00, 5530.00),
-(3, 10003, 'September', '2024-10-06 09:31:59', 'Bank Transfer', 5500.00, 0.00, 0.00, 5500.00);
+(3, 10003, 'September', '2024-10-06 09:31:59', 'Bank Transfer', 5500.00, 0.00, 0.00, 5500.00),
+(4, 10003, 'October', '2024-10-10 04:37:42', 'Visa', 5500.00, 0.00, 0.00, 5500.00),
+(5, 10005, 'October', '2024-10-10 04:38:11', 'Bank Transfer', 5500.00, 0.00, 0.00, 5500.00),
+(6, 10001, 'February', '2024-10-10 07:15:28', 'Bank Transfer', 4500.00, 200.00, 270.00, 4430.00),
+(7, 10009, 'September', '2024-10-10 08:51:56', 'Bank Transfer', 5000.00, 0.00, 0.00, 5000.00),
+(8, 10010, 'September', '2024-10-10 08:52:11', 'Bank Transfer', 5500.00, 0.00, 0.00, 5500.00);
 
 --
 -- Indexes for dumped tables
@@ -333,7 +347,7 @@ ALTER TABLE `employee_attendance`
 -- AUTO_INCREMENT for table `positions`
 --
 ALTER TABLE `positions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tbldepartments`
@@ -345,25 +359,25 @@ ALTER TABLE `tbldepartments`
 -- AUTO_INCREMENT for table `tblemployees`
 --
 ALTER TABLE `tblemployees`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `tblleaves`
 --
 ALTER TABLE `tblleaves`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `tblleavetype`
 --
 ALTER TABLE `tblleavetype`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `tblsalaries`
 --
 ALTER TABLE `tblsalaries`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
