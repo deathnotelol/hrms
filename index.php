@@ -141,7 +141,7 @@ if (isset($_POST['signin'])) {
 
                 </ul>
                 <div class="footer">
-                    <p class="copyright">ELMS ©</p>
+                    <p class="copyright"> HRmS © Design by GROUP-3</p>
 
                 </div>
             </div>

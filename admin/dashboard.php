@@ -1,6 +1,6 @@
 <?php
 session_start();
-error_reporting(0);
+// error_reporting(0);
 include('includes/config.php');
 
 // Redirect if not logged in
@@ -21,13 +21,16 @@ function fetchCount($dbh, $table, $condition = null)
     return $query->fetchColumn();
 }
 
+
+
 // Fetch latest leave applications
 function fetchLatestLeaveApplications($dbh, $limit = 6)
 {
     $sql = "SELECT tblleaves.id AS lid, tblemployees.FirstName, tblemployees.LastName, 
-                   tblemployees.EmpId, tblemployees.id AS empid, tblleaves.LeaveType, tblleaves.PostingDate, tblleaves.Status 
+                   tblemployees.EmpId, tblemployees.id AS empid, tblleaves.LeaveType, tblleaves.PostingDate, tblleaves.Status, positions.position_name 
             FROM tblleaves 
             JOIN tblemployees ON tblleaves.empid = tblemployees.id 
+            JOIN positions ON tblemployees.PositionID = positions.id 
             ORDER BY tblleaves.id DESC LIMIT :limit";
     $query = $dbh->prepare($sql);
     $query->bindParam(':limit', $limit, PDO::PARAM_INT);
@@ -41,6 +44,7 @@ define('STATUS_PENDING', 0);
 
 // Fetch various counts
 $empcount = fetchCount($dbh, 'tblemployees');
+$position = fetchCount($dbh, 'positions');
 $dptcount = fetchCount($dbh, 'tbldepartments');
 $leavtypcount = fetchCount($dbh, 'tblleavetype');
 $totalleaves = fetchCount($dbh, 'tblleaves');
@@ -50,9 +54,12 @@ $newleaveapplications = fetchCount($dbh, 'tblleaves', 'Status = ' . STATUS_PENDI
 // Fetch latest leave applications
 $latestLeaveApplications = fetchLatestLeaveApplications($dbh);
 
-?>
 
-<body>
+ ?>
+
+
+
+
     <?php include('includes/header.php'); ?>
     <?php include('includes/sidebar.php'); ?>
 
@@ -61,7 +68,7 @@ $latestLeaveApplications = fetchLatestLeaveApplications($dbh);
             <!-- Total Employee Card -->
             <a href="manageemployee.php" target="blank">
                 <div class="col s12 m12 l4">
-                    <div class="card stats-card">
+                    <div class="card stats-card" style="background-color: #0D92F4;">
                         <div class="card-content">
                             <span class="card-title">Total Employee</span>
                             <span class="stats-counter">
@@ -78,7 +85,7 @@ $latestLeaveApplications = fetchLatestLeaveApplications($dbh);
             <!-- Total Departments Card -->
             <a href="managedepartments.php" target="blank">
                 <div class="col s12 m12 l4">
-                    <div class="card stats-card">
+                    <div class="card stats-card" style="background-color: #86D293;">
                         <div class="card-content">
                             <span class="card-title">Departments</span>
                             <span class="stats-counter">
@@ -95,7 +102,7 @@ $latestLeaveApplications = fetchLatestLeaveApplications($dbh);
             <!-- Leave Type Card -->
             <a href="manageleavetype.php" target="blank">
                 <div class="col s12 m12 l4">
-                    <div class="card stats-card">
+                    <div class="card stats-card" style="background-color: #FFEB00;">
                         <div class="card-content">
                             <span class="card-title">Leave Type</span>
                             <span class="stats-counter">
@@ -112,7 +119,7 @@ $latestLeaveApplications = fetchLatestLeaveApplications($dbh);
             <!-- Total Leaves Card -->
             <a href="leaves.php" target="blank">
                 <div class="col s12 m12 l4">
-                    <div class="card stats-card">
+                    <div class="card stats-card" style="background-color: #6EC207;">
                         <div class="card-content">
                             <span class="card-title">Total Leaves</span>
                             <span class="stats-counter">
@@ -127,13 +134,13 @@ $latestLeaveApplications = fetchLatestLeaveApplications($dbh);
             </a>
 
             <!-- Approved Leaves Card -->
-            <a href="approvedleave-history.php" target="blank">
+            <a href="managePosition.php" target="blank">
                 <div class="col s12 m12 l4">
-                    <div class="card stats-card">
+                    <div class="card stats-card" style="background-color: #C7253E;">
                         <div class="card-content">
-                            <span class="card-title">Approved Leaves</span>
+                            <span class="card-title">Positions</span>
                             <span class="stats-counter">
-                                <span class="counter"><?php echo htmlentities($approvedleaves); ?></span>
+                                <span class="counter"><?php echo htmlentities($position); ?></span>
                             </span>
                         </div>
                         <div class="progress stats-card-progress">
@@ -146,11 +153,21 @@ $latestLeaveApplications = fetchLatestLeaveApplications($dbh);
             <!-- New Leave Applications Card -->
             <a href="pending-leavehistory.php" target="blank">
                 <div class="col s12 m12 l4">
-                    <div class="card stats-card">
+                    <div class="card stats-card" style="background-color: #7C00FE;">
                         <div class="card-content">
-                            <span class="card-title">New Leaves Applications</span>
+                            <span class="card-title">Total Salary of Lasted Month</span>
                             <span class="stats-counter">
-                                <span class="counter"><?php echo htmlentities($newleaveapplications); ?></span>
+                                <span class="counter">
+                                    <?php 
+                                    $month = date('F', strtotime('first day of last month'));
+                                    $sql = "SELECT SUM(NetSalary) as totalSalary FROM tblsalaries WHERE PaymentMonth = :month";
+                                    $query = $dbh->prepare($sql);
+                                    $query->bindParam(':month', $month);
+                                    $query->execute();
+                                    $results = $query->fetch();                              
+                                    
+                                    echo ($results['totalSalary']);
+                                    ?></span>
                             </span>
                         </div>
                         <div class="progress stats-card-progress">
@@ -171,9 +188,10 @@ $latestLeaveApplications = fetchLatestLeaveApplications($dbh);
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th width="200">Employee Name</th>
-                                    <th width="120">Leave Type</th>
-                                    <th width="180">Posting Date</th>
+                                    <th>Employee Name</th>
+                                    <th>Position Name</th>
+                                    <th>Leave Type</th>
+                                    <th>Posting Date</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -188,6 +206,7 @@ $latestLeaveApplications = fetchLatestLeaveApplications($dbh);
                                             <td><a href="editemployee.php?empid=<?php echo htmlentities($result->empid); ?>" target="_blank">
                                                     <?php echo htmlentities($result->FirstName . " " . $result->LastName); ?> (<?php echo htmlentities($result->EmpId); ?>)</a>
                                             </td>
+                                            <td><?php echo htmlentities($result->position_name); ?></td>
                                             <td><?php echo htmlentities($result->LeaveType); ?></td>
                                             <td><?php echo htmlentities($result->PostingDate); ?></td>
                                             <td><?php
