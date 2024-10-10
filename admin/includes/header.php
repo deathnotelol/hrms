@@ -23,20 +23,6 @@
     <link href="../assets/plugins/google-code-prettify/prettify.css" rel="stylesheet" type="text/css" />
 
 
-
- 
-
-
-
-
-
-    
-
-
-
-
-
-
     <style>
         .errorWrap {
             padding: 10px;
