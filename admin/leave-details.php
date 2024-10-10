@@ -12,6 +12,7 @@
         $did = intval($_GET['leaveid']);
         date_default_timezone_set('Asia/Yangon');
         $admremarkdate = date('Y-m-d G:i:s ', strtotime("now"));
+        $PostingDate = date('Y-m-d', strtotime("now"));
         $sql = "UPDATE tblleaves SET IsRead=:isread WHERE id=:did";
         $query = $dbh->prepare($sql);
         $query->bindParam(':isread', $isread, PDO::PARAM_STR);
@@ -96,11 +97,12 @@
 
             // Update leave with Admin remarks, status, and deduction
             $sql = "UPDATE tblleaves 
-                SET AdminRemark=:description, Status=:status, AdminRemarkDate=:admremarkdate, Deduction=:deduction, duration=:duration WHERE id=:did";
+                SET AdminRemark=:description, Status=:status, AdminRemarkDate=:admremarkdate, PostingDate=:postingdate, Deduction=:deduction, duration=:duration WHERE id=:did";
             $query = $dbh->prepare($sql);
             $query->bindParam(':description', $description, PDO::PARAM_STR);
             $query->bindParam(':status', $status, PDO::PARAM_STR);
             $query->bindParam(':admremarkdate', $admremarkdate, PDO::PARAM_STR);
+            $query->bindParam(':postingdate', $PostingDate, PDO::PARAM_STR);
             $query->bindParam(':deduction', $deduction, PDO::PARAM_STR);
             $query->bindParam(':duration', $leaveDays, PDO::PARAM_STR);
             $query->bindParam(':did', $did, PDO::PARAM_STR);

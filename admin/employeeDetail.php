@@ -49,8 +49,15 @@ if (strlen($_SESSION['alogin']) == 0) {
                                     <td><?php echo htmlentities($results['Gender']); ?></td>
                                     <td style="font-size:16px;"><b>Date Of Birth :</b></td>
                                     <td><?php echo htmlentities($results['Dob']); ?></td>
+                                   
                                 </tr>
                                 <tr>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
                                 </tr>
@@ -68,14 +75,30 @@ if (strlen($_SESSION['alogin']) == 0) {
                                 <tr>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td style="font-size:16px;"><b>Phone :</b></td>
                                     <td><?php echo htmlentities($results['Phonenumber']); ?></td>
                                     <td style="font-size:16px;"><b>Salary :</b></td>
                                     <td><?php echo htmlentities($results['salary']); ?></td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
                                 </tr>
                                 <tr>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
                                 </tr>

@@ -31,7 +31,7 @@ if (strlen($_SESSION['emplogin']) == 0) {
 
                     <a href="leavehistory.php" target="blank">
                         <div class="col s12 m12 l4">
-                            <div class="card stats-card">
+                            <div class="card stats-card" style="background-color: #7C00FE;">
                                 <div class="card-content">
                                     <span class="card-title">Total Leaves</span>
                                     <?php $eid = $_SESSION['eid'];
@@ -53,7 +53,7 @@ if (strlen($_SESSION['emplogin']) == 0) {
 
                     <a href="leavehistory.php" target="blank">
                         <div class="col s12 m12 l4">
-                            <div class="card stats-card">
+                            <div class="card stats-card" style="background-color: #C7253E;">
                                 <div class="card-content">
                                     <span class="card-title">Approved Leaves</span>
                                     <?php
@@ -77,17 +77,20 @@ if (strlen($_SESSION['emplogin']) == 0) {
 
                     <a href="leavehistory.php" target="blank">
                         <div class="col s12 m12 l4">
-                            <div class="card stats-card">
+                            <div class="card stats-card" style="background-color: #6EC207;">
                                 <div class="card-content">
-                                    <span class="card-title">New Leaves Applications</span>
+                                    <span class="card-title">Earned Total Salary</span>
                                     <?php
-                                    $sql = "SELECT id from  tblleaves where Status=0 and empid ='$eid'";
+                                    $sql = "SELECT tblemployees.*,  sum(tblsalaries.NetSalary) as totalSalary 
+                                    from tblemployees  
+                                    join tblsalaries on tblsalaries.EmpId=tblemployees.EmpId where tblemployees.id=$eid";
                                     $query = $dbh->prepare($sql);
                                     $query->execute();
-                                    $results = $query->fetchAll(PDO::FETCH_OBJ);
-                                    $approvedleaves = $query->rowCount();
+                                    $results = $query->fetch(PDO::FETCH_ASSOC);
+                                    //var_dump($results);
+                                    //$approvedleaves = $query->rowCount();
                                     ?>
-                                    <span class="stats-counter"><span class="counter"><?php echo htmlentities($approvedleaves); ?></span></span>
+                                    <span class="stats-counter"><span class="counter"><?php echo htmlentities($results['totalSalary']); ?></span></span>
 
                                 </div>
                                 <div class="progress stats-card-progress">

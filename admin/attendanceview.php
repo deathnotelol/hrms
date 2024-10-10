@@ -39,22 +39,25 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <main class="mn-inner">
         <div class="row">
+        <div class="col s12">
+                    <div class="page-title"> Attendance View</div>
+                </div>
             <div class="col s12 m12 l12">
                 <div class="card">
                     <div class="card-content">
                         <table id="example" class="display responsive-table ">
                             <thead class="bg-primary text-white">
                                 <tr>
-                                    <th>e ID</th>
+                                    
                                     <th>Name</th>
                                     <th>EmpID</th>
-                                    <th>Attendance Date</th>
-                                    <th>Day of the Week</th>
-                                    <th>Morning Shift Attendance</th>
-                                    <th>Evening Shift Attendance</th>
-                                    <th>Morning Created Time</th>
-                                    <th>Evening Created Time</th>
-                                    <th>Working Time</th>
+                                    <th> Date</th>
+                                    <th>Day</th>
+                                    <th>Morning </th>
+                                    <th>Evening </th>
+                                    <th>In Time</th>
+                                    <th>Out Time</th>
+                                    <th>Office time</th>
                                     <th>Overtime Hours</th>
                                 </tr>
 
@@ -63,7 +66,7 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <?php
                                 foreach ($results as $result) {  ?>
                                     <tr>
-                                        <td><?php echo htmlentities($result['id']); ?></td>
+                                        <!--  -->
                                         <td><?php echo htmlentities($result['FirstName']) . ' ' . htmlentities($result['LastName']); ?></td>
                                         <td><?php echo htmlentities($result['EmpId']); ?></td>
                                         <td><?php echo htmlentities($result['attendance_date']); ?></td>

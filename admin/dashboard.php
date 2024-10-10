@@ -122,7 +122,7 @@ $latestLeaveApplications = fetchLatestLeaveApplications($dbh);
             <div class="col s12 m12 l4">
                 <div class="card stats-card" style="background-color: #6EC207;">
                     <div class="card-content">
-                        <span class="card-title">Total Leaves</span>
+                        <span class="card-title">Today Leaves</span>
                         <span class="stats-counter">
                             <span class="counter">
                                 <?php
@@ -167,7 +167,7 @@ $latestLeaveApplications = fetchLatestLeaveApplications($dbh);
         </a>
 
         <!-- New Leave Applications Card -->
-        <a href="pending-leavehistory.php" target="blank">
+        <a href="salaryHistory.php" target="blank">
             <div class="col s12 m12 l4">
                 <div class="card stats-card" style="background-color: #7C00FE;">
                     <div class="card-content">

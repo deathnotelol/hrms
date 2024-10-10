@@ -40,8 +40,6 @@ $disableEvening = $eveningShiftStatus ? 'disabled' : '';
 <html lang="en">
 <head>
     <title>Admin | Attendance Employee</title>
-
-    <!-- Additional Styles for the Signature Pad -->
     <style>
         .signature-container {
             margin-top: 20px;
@@ -60,26 +58,19 @@ $disableEvening = $eveningShiftStatus ? 'disabled' : '';
             height: auto;
         }
         .btn {
-    margin: 5px; /* Adds space between buttons */
-    transition: background-color 0.3s; /* Smooth background transition */
-}
-
-.btn:hover {
-    opacity: 0.9; /* Slightly fade the button on hover */
-}
-
-.btn-success:disabled, .btn-danger:disabled {
-    opacity: 0.6; /* Faded effect for disabled buttons */
-    cursor: not-allowed; /* Change cursor to indicate unavailability */
-}
-.attend-button{
-    background-color: green;
-}
-.leave-button{
-    background-color: red;
-}
-
-
+            margin: 5px;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            opacity: 0.9;
+        }
+        .btn-success:disabled, .btn-danger:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .attend-button {
+            background-color: green;
+        }
     </style>
 </head>
 <body>
@@ -137,33 +128,22 @@ $disableEvening = $eveningShiftStatus ? 'disabled' : '';
                                         <!-- Only one row for the current day of the week -->
                                         <?php
                                             $currentDay = date('l'); // Get the current day name (e.g., Monday)
-                                            ?>
-                                         <tr>
+                                        ?>
+                                        <tr>
                                             <td><?php echo htmlspecialchars($currentDay); ?></td>
                                             <td>
-                                                <!-- Morning Shift Buttons -->
+                                                <!-- Morning Shift Button -->
                                                 <button type="button" class="btn btn-success attend-button" data-day="<?php echo htmlspecialchars($currentDate); ?>" data-shift="morning" data-attendance="1" <?php echo $disableMorning; ?>>
                                                     <i class="material-icons left">check_circle</i> Attend
                                                 </button>
-
-                                                <button type="button" class="btn btn-danger leave-button" data-day="<?php echo htmlspecialchars($currentDate); ?>" data-shift="morning" data-attendance="0" <?php echo $disableMorning; ?>>
-                                                    <i class="material-icons left">cancel</i> Leave
-                                                </button>
                                             </td>
-
                                             <td>
-                                                <!-- Evening Shift Buttons -->
+                                                <!-- Evening Shift Button -->
                                                 <button type="button" class="btn btn-success attend-button" data-day="<?php echo htmlspecialchars($currentDate); ?>" data-shift="evening" data-attendance="1" <?php echo $disableEvening; ?>>
                                                     <i class="material-icons left">check_circle</i> Attend
                                                 </button>
-
-                                                <button type="button" class="btn btn-danger leave-button" data-day="<?php echo htmlspecialchars($currentDate); ?>" data-shift="evening" data-attendance="0" <?php echo $disableEvening; ?>>
-                                                    <i class="material-icons left">cancel</i> Leave
-                                                </button>
                                             </td>
                                         </tr>
-
-
                                     </tbody>
                                 </table>
                             </form>
@@ -176,142 +156,82 @@ $disableEvening = $eveningShiftStatus ? 'disabled' : '';
     </main>
     <div class="left-sidebar-hover"></div>
 
-    <?php include ('includes/footer.php'); ?>
+    <?php include('includes/footer.php'); ?>
 
     <script>
-$(document).ready(function() {
-    var empId = <?php echo json_encode($eid); ?>;
-    var currentDate = new Date().toISOString().split('T')[0]; // Format YYYY-MM-DD
+    $(document).ready(function() {
+        var empId = <?php echo json_encode($eid); ?>;
+        var currentDate = new Date().toISOString().split('T')[0];
 
-    // Function to check and disable buttons based on attendance status
-    function checkAttendanceStatus() {
-        $.ajax({
-            url: 'check_attendance.php', 
-            type: 'POST',
-            data: {
-                emp_id: empId,
-                attendance_date: currentDate
-            },
-            success: function(response) {
-                var data = JSON.parse(response);
-                // Disable morning shift buttons if morning attendance is recorded
-                if (data.morningRecorded) {
-                    $('.attend-button[data-shift="morning"], .leave-button[data-shift="morning"]').prop('disabled', true);
-                }
-                // Disable evening shift buttons if evening attendance is recorded
-                if (data.eveningRecorded) {
-                    $('.attend-button[data-shift="evening"], .leave-button[data-shift="evening"]').prop('disabled', true);
-                }
-            },
-            error: function() {
-                console.error('Error checking attendance status.');
-            }
-        });
-    }
-
-    // Call the function to check attendance status
-    checkAttendanceStatus();
-
-    // Handling button clicks (no changes needed)
-    $('.attend-button, .leave-button').click(function() {
-        var buttonClicked = $(this);  // Reference to the clicked button
-        var day = buttonClicked.data('day'); 
-        var shift = buttonClicked.data('shift'); 
-        var attendance = buttonClicked.data('attendance'); 
-
-        // Prevent multiple clicks
-        if (buttonClicked.prop('disabled')) {
-            return; // If button is already disabled, do nothing
-        }
-
-        // Disable both buttons after one is clicked
-        buttonClicked.closest('td').find('button').prop('disabled', true);
-
-        // Proceed with AJAX request
-        $.ajax({
-            url: 'save_attendance.php',
-            type: 'POST',
-            data: {
-                emp_id: empId,
-                attendance_date: currentDate,
-                day_of_week: day,
-                shift: shift,
-                attendance: attendance
-            },
-            success: function(response) {
-                var data = JSON.parse(response);
-                
-                if (data.status === 'success') {
-                    alert('Attendance saved successfully!');
-                    window.location.href = 'test.php';
-                    // Disable only the buttons related to the recorded shift
-                    if (attendance === 1) { // Attendance recorded
-                        if (shift === "morning") {
-                            $('.attend-button[data-shift="morning"], .leave-button[data-shift="morning"]').prop('disabled', true);
-                        } else if (shift === "evening") {
-                            $('.attend-button[data-shift="evening"], .leave-button[data-shift="evening"]').prop('disabled', true);
-                        }
+        function checkAttendanceStatus() {
+            $.ajax({
+                url: 'check_attendance.php', 
+                type: 'POST',
+                data: {
+                    emp_id: empId,
+                    attendance_date: currentDate
+                },
+                success: function(response) {
+                    var data = JSON.parse(response);
+                    if (data.morningRecorded) {
+                        $('.attend-button[data-shift="morning"]').prop('disabled', true);
                     }
-                } else {
-                    alert(data.message); // Show error message
-                    buttonClicked.prop('disabled', false); // Re-enable the button if saving fails
+                    if (data.eveningRecorded) {
+                        $('.attend-button[data-shift="evening"]').prop('disabled', true);
+                    }
+                },
+                error: function() {
+                    console.error('Error checking attendance status.');
                 }
-            },
-            error: function() {
-                alert('An error occurred while saving attendance.');
-                buttonClicked.prop('disabled', false); // Re-enable the button if there's an error
+            });
+        }
+
+        checkAttendanceStatus();
+
+        $('.attend-button').click(function() {
+            var buttonClicked = $(this);
+            var day = buttonClicked.data('day');
+            var shift = buttonClicked.data('shift');
+            var attendance = buttonClicked.data('attendance');
+
+            if (buttonClicked.prop('disabled')) {
+                return;
             }
+
+            buttonClicked.closest('td').find('button').prop('disabled', true);
+
+            $.ajax({
+                url: 'save_attendance.php',
+                type: 'POST',
+                data: {
+                    emp_id: empId,
+                    attendance_date: currentDate,
+                    day_of_week: day,
+                    shift: shift,
+                    attendance: attendance
+                },
+                success: function(response) {
+                    var data = JSON.parse(response);
+                    if (data.status === 'success') {
+                        alert('Attendance saved successfully!');
+                        window.location.href = 'attendanceuserview.php';
+                        if (shift === "morning") {
+                            $('.attend-button[data-shift="morning"]').prop('disabled', true);
+                        } else if (shift === "evening") {
+                            $('.attend-button[data-shift="evening"]').prop('disabled', true);
+                        }
+                    } else {
+                        alert(data.message);
+                        buttonClicked.prop('disabled', false);
+                    }
+                },
+                error: function() {
+                    alert('An error occurred while saving attendance.');
+                    buttonClicked.prop('disabled', false);
+                }
+            });
         });
     });
-});
-$('.leave-button').click(function() {
-    var buttonClicked = $(this);
-    var day = buttonClicked.data('day');
-    var shift = buttonClicked.data('shift');
-    var attendance = buttonClicked.data('attendance');
-    
-    // Prevent multiple clicks
-    if (buttonClicked.prop('disabled')) {
-        return; // If button is already disabled, do nothing
-    }
-
-    if (attendance === 0) { // If 'Leave' button is clicked
-        window.location.href = 'apply-leave.php'; // Redirect to apply-leave.php
-        return; // Stop further execution
-    }
-
-    // Disable both buttons after one is clicked
-    buttonClicked.closest('td').find('button').prop('disabled', true);
-
-    // Proceed with AJAX request for attendance
-    $.ajax({
-        url: 'save_attendance.php',
-        type: 'POST',
-        data: {
-            emp_id: empId,
-            attendance_date: currentDate,
-            day_of_week: day,
-            shift: shift,
-            attendance: attendance
-        },
-        success: function(response) {
-            var data = JSON.parse(response);
-            if (data.status === 'success') {
-                alert('Attendance saved successfully!');
-                window.location.href = 'test.php'; // Redirect after attendance is saved
-            } else {
-                alert(data.message); // Show error message
-                buttonClicked.prop('disabled', false); // Re-enable the button if saving fails
-            }
-        },
-        error: function() {
-            alert('An error occurred while saving attendance.');
-            buttonClicked.prop('disabled', false); // Re-enable the button if there's an error
-        }
-    });
-});
-
-</script>
-
+    </script>
 </body>
 </html>

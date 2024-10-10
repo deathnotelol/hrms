@@ -17,6 +17,19 @@
     <link href="assets/plugins/google-code-prettify/prettify.css" rel="stylesheet" type="text/css" />
     <link href="../assets/css/alpha.min.css" rel="stylesheet" type="text/css" />
     <link href="../assets/css/custom.css" rel="stylesheet" type="text/css" />
+
+    <!-- Additional Styles for the Signature Pad -->
+    <style>
+        .signature-container {
+            margin-top: 20px;
+            display: block;
+        }
+        canvas.signature-pad {
+            border: 1px solid black;
+            width: 100%; /* Adjust to desired width */
+            height: 200px; /* Adjust to desired height */
+        }
+    </style>
     
 
 </head>
