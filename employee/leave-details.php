@@ -6,9 +6,6 @@ if (strlen($_SESSION['emplogin']) == 0) {
     header('location:index.php');
 } else {
 
-
-
-
 ?>
     <!DOCTYPE html>
     <html lang="en">
@@ -59,7 +56,7 @@ if (strlen($_SESSION['emplogin']) == 0) {
                                 <tbody>
                                     <?php
                                     $lid = intval($_GET['leaveid']);
-                                    $sql = "SELECT tblleaves.id as lid,tblemployees.FirstName,tblemployees.LastName,tblemployees.EmpId,tblemployees.id,tblemployees.Gender,tblemployees.Phonenumber,tblemployees.EmailId,tblleaves.LeaveType,tblleaves.ToDate,tblleaves.FromDate,tblleaves.Description,tblleaves.PostingDate,tblleaves.Status,tblleaves.AdminRemark,tblleaves.AdminRemarkDate from tblleaves join tblemployees on tblleaves.empid=tblemployees.id where tblleaves.id=:lid";
+                                    $sql = "SELECT tblleaves.id as lid,tblemployees.FirstName,tblemployees.LastName,tblemployees.EmpId,tblemployees.id,tblemployees.Gender,tblemployees.Phonenumber,tblemployees.EmailId,tblleaves.LeaveType,tblleaves.ToDate,tblleaves.FromDate,tblleaves.Description,tblleaves.PostingDate,tblleaves.Status,tblleaves.AdminRemark,tblleaves.AdminRemarkDate, tblleaves.duration  from tblleaves join tblemployees on tblleaves.empid=tblemployees.id where tblleaves.id=:lid";
                                     $query = $dbh->prepare($sql);
                                     $query->bindParam(':lid', $lid, PDO::PARAM_STR);
                                     $query->execute();
@@ -84,8 +81,8 @@ if (strlen($_SESSION['emplogin']) == 0) {
                                                 <td><?php echo htmlentities($result->EmailId); ?></td>
                                                 <td style="font-size:16px;"><b>Emp Contact No. :</b></td>
                                                 <td><?php echo htmlentities($result->Phonenumber); ?></td>
-                                                <td>&nbsp;</td>
-                                                <td>&nbsp;</td>
+                                                <td style="font-size:16px;"><b>Posting Date</b></td>
+                                                <td><?php echo htmlentities($result->PostingDate); ?></td>
                                             </tr>
 
                                             <tr>
@@ -93,8 +90,9 @@ if (strlen($_SESSION['emplogin']) == 0) {
                                                 <td><?php echo htmlentities($result->LeaveType); ?></td>
                                                 <td style="font-size:16px;"><b>Leave Date . :</b></td>
                                                 <td>From <?php echo htmlentities($result->FromDate); ?> to <?php echo htmlentities($result->ToDate); ?></td>
-                                                <td style="font-size:16px;"><b>Posting Date</b></td>
-                                                <td><?php echo htmlentities($result->PostingDate); ?></td>
+                                                <td style="font-size:16px;"><b>Duration</b></td>
+                                                <td><?php echo htmlentities($result->duration); ?></td>
+                                             
                                             </tr>
 
                                             <tr>

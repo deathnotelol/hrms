@@ -155,7 +155,10 @@ if (strlen($_SESSION['alogin']) == 0) {
 
                                                 </td>
                                                 <td><?php echo htmlentities($result->RegDate); ?></td>
-                                                <td><a href="editemployee.php?empid=<?php echo htmlentities($result->id); ?>"><i class="material-icons">mode_edit</i></a>
+                                                <td><a href="employeeDetail.php?id=<?php echo htmlentities($result->id); ?>"><i class="material-icons">preview</i></a>
+
+                                                <a href="editemployee.php?empid=<?php echo htmlentities($result->id); ?>"><i class="material-icons">mode_edit</i></a>
+
                                                     <?php if ($result->Status == 1) { ?>
                                                         <a href="manageemployee.php?inid=<?php echo htmlentities($result->id); ?>" onclick="return confirm('Are you sure you want to inactive this Employe?');"> <i class=" material-icons" title="Inactive">clear</i>
                                                         <?php } else { ?>
@@ -170,8 +173,6 @@ if (strlen($_SESSION['alogin']) == 0) {
                                                                 title="Delete">
                                                                 delete
                                                             </a>
-
-
                                                 </td>
                                             </tr>
                                     <?php $cnt++;

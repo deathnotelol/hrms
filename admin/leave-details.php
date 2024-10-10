@@ -73,7 +73,7 @@
             $leaveType = strtolower(trim($empDetails->LeaveType));
 
             // Debugging output to check the leave type
-            echo "Leave Type: $leaveType<br>";
+           
 
             $deductionPercentagePerDay = 0; // Default deduction if no match is found
 
@@ -91,19 +91,18 @@
             $deduction = $basicSalary * ($deductionPercentagePerDay / 100) * $leaveDays;
 
             // Debugging output to check the calculated deduction
-            echo "Deduction: $deduction for Leave Type: $leaveType<br>";
-            echo "$leaveDays";
+
 
 
             // Update leave with Admin remarks, status, and deduction
             $sql = "UPDATE tblleaves 
-                SET AdminRemark=:description, Status=:status, AdminRemarkDate=:admremarkdate, Deduction=:deduction 
-                WHERE id=:did";
+                SET AdminRemark=:description, Status=:status, AdminRemarkDate=:admremarkdate, Deduction=:deduction, duration=:duration WHERE id=:did";
             $query = $dbh->prepare($sql);
             $query->bindParam(':description', $description, PDO::PARAM_STR);
             $query->bindParam(':status', $status, PDO::PARAM_STR);
             $query->bindParam(':admremarkdate', $admremarkdate, PDO::PARAM_STR);
             $query->bindParam(':deduction', $deduction, PDO::PARAM_STR);
+            $query->bindParam(':duration', $leaveDays, PDO::PARAM_STR);
             $query->bindParam(':did', $did, PDO::PARAM_STR);
             $query->execute();
             $msg = "Leave updated and deduction applied successfully!";
@@ -130,11 +129,10 @@
                             <?php if (isset($msg)) { ?><div class="succWrap"><strong>SUCCESS</strong> : <?php echo htmlentities($msg); ?> </div><?php } ?>
                             <table id="example" class="display responsive-table ">
 
-
                                 <tbody>
                                     <?php
                                     $lid = intval($_GET['leaveid']);
-                                    $sql = "SELECT tblleaves.id as lid,tblemployees.FirstName,tblemployees.LastName,tblemployees.EmpId,tblemployees.id,tblemployees.Gender,tblemployees.Phonenumber,tblemployees.EmailId,tblleaves.LeaveType,tblleaves.ToDate,tblleaves.FromDate,tblleaves.Description,tblleaves.PostingDate,tblleaves.Status,tblleaves.AdminRemark,tblleaves.AdminRemarkDate from tblleaves join tblemployees on tblleaves.empid=tblemployees.id where tblleaves.id=:lid";
+                                    $sql = "SELECT tblleaves.id as lid,tblemployees.FirstName,tblemployees.LastName,tblemployees.EmpId,tblemployees.id,tblemployees.Gender,tblemployees.Phonenumber,tblemployees.EmailId,tblleaves.LeaveType,tblleaves.ToDate,tblleaves.FromDate,tblleaves.Description,tblleaves.PostingDate,tblleaves.Status,tblleaves.AdminRemark,tblleaves.AdminRemarkDate, tblleaves.duration from tblleaves join tblemployees on tblleaves.empid=tblemployees.id where tblleaves.id=:lid";
                                     $query = $dbh->prepare($sql);
                                     $query->bindParam(':lid', $lid, PDO::PARAM_STR);
                                     $query->execute();
@@ -159,8 +157,8 @@
                                                 <td><?php echo htmlentities($result->EmailId); ?></td>
                                                 <td style="font-size:16px;"><b>Emp Contact No. :</b></td>
                                                 <td><?php echo htmlentities($result->Phonenumber); ?></td>
-                                                <td>&nbsp;</td>
-                                                <td>&nbsp;</td>
+                                                <td style="font-size:16px;"><b>Posting Date</b></td>
+                                                <td><?php echo htmlentities($result->PostingDate); ?></td>
                                             </tr>
 
                                             <tr>
@@ -168,8 +166,8 @@
                                                 <td><?php echo htmlentities($result->LeaveType); ?></td>
                                                 <td style="font-size:16px;"><b>Leave Date . :</b></td>
                                                 <td>From <?php echo htmlentities($result->FromDate); ?> to <?php echo htmlentities($result->ToDate); ?></td>
-                                                <td style="font-size:16px;"><b>Posting Date</b></td>
-                                                <td><?php echo htmlentities($result->PostingDate); ?></td>
+                                                <td style="font-size:16px;"><b>Duration</b></td>
+                                                <td><?php echo htmlentities($result->duration); ?></td>
                                             </tr>
 
                                             <tr>
